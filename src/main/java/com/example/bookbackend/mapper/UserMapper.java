@@ -2,6 +2,7 @@ package com.example.bookbackend.mapper;
 
 
 import com.example.bookbackend.model.User;
+import com.example.bookbackend.provider.SqlProvider;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -13,7 +14,8 @@ public interface UserMapper {
      *
      * @param user
      */
-    @Insert("insert into user(name,pwd,email) values(#{name},#{pwd},#{email})")
+    //@Insert("insert into user(name,pwd,email) values(#{name},#{pwd},#{email})")
+    @InsertProvider(type=SqlProvider.class,method = "insert")
     @Options(useGeneratedKeys = true, keyColumn = "user_id", keyProperty = "userId")
     void insert(User user);
 
@@ -27,6 +29,8 @@ public interface UserMapper {
     Long update(User user);
     @Update("update user set state=1 where email=#{email}")
     Long activate(User user);
+    @Update("update user set head_path=#{headPath} where email=#{email}")
+    Long updateHead(User user);
 
 
     /**

@@ -9,6 +9,8 @@ public class User {
     private String headPath;
     private Integer state;
     private float grade;
+    private String signature;
+    private String sex;
 
     public Integer getId() {
         return userId;
@@ -42,6 +44,14 @@ public class User {
         return grade;
     }
 
+    public String getSignature() {
+        return signature;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
     public void setId(Integer id) {
         this.userId = id;
     }
@@ -72,5 +82,13 @@ public class User {
 
     public void setGrade(float grade) {
         this.grade = grade;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

@@ -42,7 +42,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/selectAll")
+    @GetMapping("/selectAll")
     public List<User> selectAll() {
         return userMapper.selectAll();
     }
@@ -66,7 +66,7 @@ public class UserController {
         }else return "false";
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Message login(@RequestParam("email") String email, @RequestParam("pwd") String pwd){
         User user = userMapper.selectByEmail(email);
         if (user == null){
