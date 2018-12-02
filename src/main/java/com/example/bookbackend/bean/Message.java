@@ -1,4 +1,4 @@
-package com.example.bookbackend.model;
+package com.example.bookbackend.bean;
 
 public class Message {
     private String code;

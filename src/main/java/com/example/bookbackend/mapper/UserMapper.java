@@ -1,8 +1,8 @@
 package com.example.bookbackend.mapper;
 
 
-import com.example.bookbackend.model.User;
-import com.example.bookbackend.provider.SqlProvider;
+import com.example.bookbackend.bean.User;
+import com.example.bookbackend.provider.UserSqlProvider;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface UserMapper {
      * @param user
      */
     //@Insert("insert into user(name,pwd,email) values(#{name},#{pwd},#{email})")
-    @InsertProvider(type=SqlProvider.class,method = "insert")
+    @InsertProvider(type= UserSqlProvider.class,method = "insert")
     @Options(useGeneratedKeys = true, keyColumn = "user_id", keyProperty = "userId")
     void insert(User user);
 
@@ -28,9 +28,11 @@ public interface UserMapper {
     @Update("update person set name=#{name},age=#{age} where id=#{id}")
     Long update(User user);
     @Update("update user set state=1 where email=#{email}")
-    Long activate(User user);
+    Long activate(@Param("email") String email);
     @Update("update user set head_path=#{headPath} where email=#{email}")
-    Long updateHead(User user);
+    Long updateHead(@Param("headPath") String headPath,@Param("email") String email);
+    @UpdateProvider(type = UserSqlProvider.class,method = "updateInfo")
+    Long updateInfo(User user);
 
 
     /**
@@ -65,7 +67,7 @@ public interface UserMapper {
      * @param email
      * @return
      */
-    @Select("select email,pwd,state from user where email=#{email}")
+    @Select("select * from user where email=#{email}")
     User selectByEmail(@Param("email") String email);
 
 }

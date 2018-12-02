@@ -1,8 +1,8 @@
 package com.example.bookbackend.controller;
 
+import com.example.bookbackend.mapper.BookMapper;
 import com.example.bookbackend.mapper.UserMapper;
-import com.example.bookbackend.model.Message;
-import com.example.bookbackend.model.User;
+import com.example.bookbackend.bean.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +21,8 @@ public class FileController {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private BookMapper bookMapper;
 
     //@ResponseBody
     @PostMapping("/heads")
@@ -31,10 +33,10 @@ public class FileController {
         String filePath = "/imgs/heads/";
         try {
             file.transferTo(new File(filePath+filename));
-            User user = new User();
-            user.setPath(filePath+filename);
-            user.setEmail(email);
-            userMapper.updateHead(user);
+//            User user = new User();
+//            user.setPath(filePath+filename);
+//            user.setEmail(email);
+            userMapper.updateHead(filePath+filename,email);
             return new Message("201","上传成功");
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -55,6 +57,7 @@ public class FileController {
         }
         try {
             file.transferTo(new File(filePath+filename));
+            bookMapper.updateImage(id,filePath+filename);
             return new Message("201","上传成功");
         } catch (IllegalStateException e) {
             e.printStackTrace();

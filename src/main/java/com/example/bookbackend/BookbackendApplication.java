@@ -1,6 +1,6 @@
 package com.example.bookbackend;
 
-import com.example.bookbackend.model.User;
+import com.example.bookbackend.bean.User;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

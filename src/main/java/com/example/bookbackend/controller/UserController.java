@@ -1,8 +1,8 @@
 package com.example.bookbackend.controller;
 
 import com.example.bookbackend.mapper.UserMapper;
-import com.example.bookbackend.model.Message;
-import com.example.bookbackend.model.User;
+import com.example.bookbackend.bean.Message;
+import com.example.bookbackend.bean.User;
 import com.example.bookbackend.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -27,24 +27,27 @@ public class UserController {
     @PostMapping(path="/signUp")
     @Transactional(rollbackFor = Exception.class)//事物回滚
     public Message insert(@RequestBody User user){
-        Message message = new Message("105","注册成功！");
+        //Message message = new Message("105","注册成功！");
         try {
             userMapper.insert(user);
             sendMail(user.getEmail());
         }catch (DuplicateKeyException duplicateKeyException){
-            message = new Message("106","该邮箱已被注册！");
+            return new Message("106","该邮箱已被注册！");
         }catch (SendFailedException e){
             System.out.println(e.getMessage());
-            message = new Message("107","无效邮箱！");
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//回滚事物
-        }finally {
-            return message;
+            return new Message("107","无效邮箱！");
         }
+        return new Message("105","注册成功！");
     }
 
     @GetMapping("/selectAll")
     public List<User> selectAll() {
         return userMapper.selectAll();
+    }
+    @GetMapping("/selectByEmail")
+    public User selectByEmail(@RequestParam("email") String email){
+        return userMapper.selectByEmail(email);
     }
 
     //@RequestMapping("/mail")
@@ -59,9 +62,7 @@ public class UserController {
 
     @GetMapping("/activate")
     public String active(@RequestParam("email") String email){
-        User user = new User();
-        user.setEmail(email);
-        if(userMapper.activate(user)==1){
+        if(userMapper.activate(email)==1){
             return "success";
         }else return "false";
     }
@@ -78,6 +79,18 @@ public class UserController {
         }else {
             return new Message("104","密码错误！");
         }
+    }
+
+    @PostMapping("/updateInfo")
+    public Message updateInfo(@RequestBody User user){
+        try{
+            System.out.println(user.getName());
+            userMapper.updateInfo(user);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Message("109","更新失败！");
+        }
+        return new Message("108","更新成功！");
     }
 
 }

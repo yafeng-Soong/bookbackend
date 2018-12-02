@@ -63,10 +63,11 @@ public class EmailService {
     public void sendTemplateMail(String email) {
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
+            message.addHeader("X-Mailer","Microsoft Outlook Express 6.00.2900.2869");
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(sender);
             helper.setTo(email);
-            helper.setSubject("二手图书交换平台激活账号");
+            helper.setSubject("验证");
 
             Context context = new Context();
             //context.setVariable("id", "wenter");

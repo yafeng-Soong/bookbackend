@@ -1,18 +1,19 @@
-package com.example.bookbackend.model;
+package com.example.bookbackend.bean;
+
+import java.util.List;
 
 public class User {
     private Integer userId;
     private String name;
     private String email;
     private String pwd;
-    //private String place;
     private String headPath;
     private Integer state;
     private float grade;
     private String signature;
     private String sex;
 
-    public Integer getId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -28,11 +29,7 @@ public class User {
         return pwd;
     }
 
-//    public String getPlace() {
-//        return place;
-//    }
-
-    public String getPath() {
+    public String getHeadPath() {
         return headPath;
     }
 
@@ -52,8 +49,9 @@ public class User {
         return sex;
     }
 
-    public void setId(Integer id) {
-        this.userId = id;
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public void setName(String name) {
@@ -68,12 +66,8 @@ public class User {
         this.pwd = pwd;
     }
 
-//    public void setPlace(String place) {
-//        this.place = place;
-//    }
-
-    public void setPath(String path) {
-        this.headPath = path;
+    public void setHeadPath(String headPath) {
+        this.headPath = headPath;
     }
 
     public void setState(Integer state) {
