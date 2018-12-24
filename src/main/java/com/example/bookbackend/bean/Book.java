@@ -1,6 +1,8 @@
 package com.example.bookbackend.bean;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+//import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -11,13 +13,13 @@ public class Book {
     private String type;//图书类型
     private int state;//图书状态
     private String introduction;//简介
-    private Date date;//发布日期
+//    private Date date;//发布日期
     private String imgPath;
     private String imgPath2;
     private String imgPath3;
     private int good;//喜欢收藏数
     private int bad;//不喜欢数
-    private Timestamp udDate;//修改时间
+    //private Timestamp udDate;//修改时间
 
     private List<Comment> comments;
 
@@ -45,9 +47,10 @@ public class Book {
         return introduction;
     }
 
-    public Date getDate() {
-        return date;
-    }
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+//    public Date getDate() {
+//        return date;
+//    }
     public String getImgPath() {
         return imgPath;
     }
@@ -72,9 +75,9 @@ public class Book {
         this.bookId = bookId;
     }
 
-    public Timestamp getUdDate() {
-        return udDate;
-    }
+//    public Timestamp getUdDate() {
+//        return udDate;
+//    }
 
     public void setEmail(String email) {
         this.email = email;

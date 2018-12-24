@@ -33,6 +33,8 @@ public interface UserMapper {
     Long updateHead(@Param("headPath") String headPath,@Param("email") String email);
     @UpdateProvider(type = UserSqlProvider.class,method = "updateInfo")
     Long updateInfo(User user);
+    @Update("update user set pwd=#{pwd} where email=#{email}")
+    Long resetPwd(@Param("email") String email,@Param("pwd") String pwd);
 
 
     /**

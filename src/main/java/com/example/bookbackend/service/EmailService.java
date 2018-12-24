@@ -1,5 +1,6 @@
 package com.example.bookbackend.service;
 
+import com.example.bookbackend.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -60,19 +61,19 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    public void sendTemplateMail(String email) {
+    public void sendTemplateMail(String email,String template,String subject) {
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
             message.addHeader("X-Mailer","Microsoft Outlook Express 6.00.2900.2869");
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(sender);
             helper.setTo(email);
-            helper.setSubject("验证");
+            helper.setSubject(subject);
 
             Context context = new Context();
-            //context.setVariable("id", "wenter");
+            //设置模板中的变量
             context.setVariable("email",email);
-            String emailContent = templateEngine.process("emailTemplate", context);
+            String emailContent = templateEngine.process(template, context);
             helper.setText(emailContent, true);
         } catch (MessagingException e) {
             throw new RuntimeException("Messaging  Exception !", e);
