@@ -1,15 +1,19 @@
 package com.example.bookbackend.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Comment {
     private int commentId;
     private String writerEmail;
-    private String bookId;
+    private Integer bookId;
     private String content;
     private Date date;
     private int good;
     private int bad;
+    private User user;
+    private Book book;
 
     public int getCommentId() {
         return commentId;
@@ -19,7 +23,7 @@ public class Comment {
         return writerEmail;
     }
 
-    public String getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 
@@ -27,6 +31,7 @@ public class Comment {
         return content;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getDate() {
         return date;
     }
@@ -39,6 +44,14 @@ public class Comment {
         return bad;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
     public void setCommentId(int commentId) {
         this.commentId = commentId;
     }
@@ -47,7 +60,7 @@ public class Comment {
         this.writerEmail = writerEmail;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
@@ -65,6 +78,14 @@ public class Comment {
 
     public void setBad(int bad) {
         this.bad = bad;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 }
 

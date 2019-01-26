@@ -20,9 +20,15 @@ public class CommentController {
     @GetMapping("/selectComments")
     public List<Comment> selectComments(@RequestParam("bookId") Integer bookId){return commentMapper.selectByBookId(bookId);}
 
-    @PostMapping("/insertComment")
+    @PostMapping("/insert")
     public int insert(@RequestBody Comment comment){
+        System.out.println(comment.getWriterEmail());
         commentMapper.insert(comment);
         return comment.getCommentId();
+    }
+
+    @GetMapping("/myComments")
+    public List<Comment> selectByEmial(@RequestParam("email") String email){
+        return commentMapper.selectMyComments(email);
     }
 }

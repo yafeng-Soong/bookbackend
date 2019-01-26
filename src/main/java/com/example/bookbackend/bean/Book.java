@@ -19,6 +19,9 @@ public class Book {
     private String imgPath3;
     private int good;//喜欢收藏数
     private int bad;//不喜欢数
+    private String changer;
+    private Integer changeId;
+    private Book changeBook;
     //private Timestamp udDate;//修改时间
 
     private List<Comment> comments;
@@ -71,6 +74,18 @@ public class Book {
         return bad;
     }
 
+    public String getChanger() {
+        return changer;
+    }
+
+    public Integer getChangeId() {
+        return changeId;
+    }
+
+    public Book getChangeBook() {
+        return changeBook;
+    }
+
     public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
@@ -81,6 +96,18 @@ public class Book {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setChanger(String changer) {
+        this.changer = changer;
+    }
+
+    public void setChangeId(Integer changeId) {
+        this.changeId = changeId;
+    }
+
+    public void setChangeBook(Book changeBook) {
+        this.changeBook = changeBook;
     }
 
     public List<Comment> getComments() {

@@ -57,11 +57,11 @@ public interface UserMapper {
     /**
      * 根据主键查询单个
      *
-     * @param id
+     * @param userId
      * @return
      */
-    @Select("select id,name,age from person where id=#{id}")
-    User selectById(@Param("id") Long id);
+    @Select("select * from user where user_id=#{userId}")
+    User selectById(@Param("userId") Long userId);
 
     /**
      * 根据email查询
@@ -71,5 +71,6 @@ public interface UserMapper {
      */
     @Select("select * from user where email=#{email}")
     User selectByEmail(@Param("email") String email);
-
+    @Select("select name,head_path from user where email=#{email}")
+    User selectWithName(@Param("email") String email);
 }

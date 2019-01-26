@@ -104,6 +104,7 @@ public class UserController {
     public Message login(@RequestParam("email") String email, @RequestParam("pwd") String pwd, HttpServletRequest request){
         User user = userMapper.selectByEmail(email);
         if (user == null){
+            //若user为空表示没有查到该用户
             return new Message("101","不存在该用户！");
         }else if (user.getState() == 0){
             return new Message("102","该账号还未激活！");

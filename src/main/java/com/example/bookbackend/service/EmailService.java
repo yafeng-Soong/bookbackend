@@ -61,11 +61,20 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
+    /**
+     * 发送模板邮件
+     * @param email 接收方的email
+     * @param template 模板的名称，有激活模板和找回密码两种
+     * @param subject 邮件主题
+     */
+
     public void sendTemplateMail(String email,String template,String subject) {
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
+            //为了防止接收方丢入垃圾箱，可以在header里加上Outlook
             message.addHeader("X-Mailer","Microsoft Outlook Express 6.00.2900.2869");
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            //指定源、目的地、主题
             helper.setFrom(sender);
             helper.setTo(email);
             helper.setSubject(subject);
@@ -73,6 +82,7 @@ public class EmailService {
             Context context = new Context();
             //设置模板中的变量
             context.setVariable("email",email);
+            //指定template模板
             String emailContent = templateEngine.process(template, context);
             helper.setText(emailContent, true);
         } catch (MessagingException e) {
@@ -81,3 +91,4 @@ public class EmailService {
         javaMailSender.send(message);
     }
 }
+
