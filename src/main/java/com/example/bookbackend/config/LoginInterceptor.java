@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("Interceptor preHandler method is running !");
+        //System.out.println("Interceptor preHandler method is running !");
         HttpSession session = request.getSession();
         //这里的User是登陆时放入session的
         User user = (User) session.getAttribute("user");
@@ -29,6 +29,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             PrintWriter writer = response.getWriter();
             writer.write(JSON.toJSONString(msg));
             writer.close();
+            System.out.println("来自"+request.getRemoteAddr()+":"+request.getRemotePort()+"的请求"+request.getRequestURL()+"被拦截");
             return false;
         }else {
             //如果session里有user，表示该用户已经登陆，放行，用户即可继续调用自己需要的接口

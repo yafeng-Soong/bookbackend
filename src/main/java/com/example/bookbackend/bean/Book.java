@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 //import java.util.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Book {
@@ -13,7 +15,7 @@ public class Book {
     private String type;//图书类型
     private int state;//图书状态
     private String introduction;//简介
-//    private Date date;//发布日期
+    private Date date;//发布日期
     private String imgPath;
     private String imgPath2;
     private String imgPath3;
@@ -23,6 +25,7 @@ public class Book {
     private Integer changeId;
     private Book changeBook;
     //private Timestamp udDate;//修改时间
+    private List<String> imgPaths;//web端用，返回多张图书图片
 
     private List<Comment> comments;
 
@@ -50,10 +53,10 @@ public class Book {
         return introduction;
     }
 
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-//    public Date getDate() {
-//        return date;
-//    }
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    public Date getDate() {
+        return date;
+    }
     public String getImgPath() {
         return imgPath;
     }
@@ -112,5 +115,16 @@ public class Book {
 
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public void addImgPaths(){
+        imgPaths = new ArrayList<>() ;
+        imgPaths.add(getImgPath());
+        imgPaths.add((imgPath2 == null? "/imgs/books/default.jpg":imgPath2));
+        imgPaths.add((imgPath3 == null? "/imgs/books/default.jpg":imgPath3));
+    }
+
+    public List<String> getImgPaths(){
+        return imgPaths;
     }
 }

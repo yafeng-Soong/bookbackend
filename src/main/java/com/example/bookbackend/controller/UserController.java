@@ -5,6 +5,7 @@ import com.example.bookbackend.bean.Message;
 import com.example.bookbackend.bean.User;
 import com.example.bookbackend.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,16 +40,23 @@ public class UserController {
     public Message insert(@RequestBody User user){
         //Message message = new Message("105","注册成功！");
         try {
-            String subject = "尊敬的"+user.getName()+"!请激活您的账号";
+            String subject = "尊敬的" + user.getName() + "!请激活您的账号";
             userMapper.insert(user);
-            sendMail(user.getEmail(),"emailTemplate",subject);
-        }catch (DuplicateKeyException duplicateKeyException){
-            return new Message("106","该邮箱已被注册！");
+            sendMail(user.getEmail(), "emailTemplate", subject);
+        }catch (DataAccessException e){
+            e.printStackTrace();
+            return new Message("111","该邮箱已被注册！");
         }catch (SendFailedException e){
-            System.out.println(e.getMessage());
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//回滚事物
+            e.printStackTrace();
             return new Message("107","无效邮箱！");
         }
+//        }catch (DuplicateKeyException duplicateKeyException){
+//            return new Message("106","该邮箱已被注册！");
+//        }catch (SendFailedException e){
+//            System.out.println(e.getMessage());
+//            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//回滚事物
+//            return new Message("107","无效邮箱！");
+//        }
         return new Message("105","注册成功！");
     }
 

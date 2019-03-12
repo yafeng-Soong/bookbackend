@@ -14,6 +14,7 @@ public interface BookMapper {
     @Options(useGeneratedKeys = true, keyColumn = "book_id", keyProperty = "bookId")
     Long insert(Book book);
 
+    //各种查询接口
     @Select("select * from book where book_id=#{bookId}")
     Book selectById(Integer bookId);//commentmapper关联查询用
     @Select("select * from book where email=#{email} and state=1 order by book_id desc")
@@ -25,6 +26,11 @@ public interface BookMapper {
     @Select("select * from book where state=1 order by book_id desc limit 50")
     List<Book> selectAll();
 
+    /**
+     * 按email查询交易信息
+     * @param email
+     * @return
+     */
     @Select("select * from book where (state=2 or state=3 or state=4) and email=#{email}")
     @Results({
             @Result(column="book_id", property="bookId",id=true),
@@ -34,6 +40,11 @@ public interface BookMapper {
     })
     List<Book> selectChanges(@Param("email") String email);
 
+    /**
+     * 按bookId查询加上评论的图书详细信息
+     * @param bookId
+     * @return
+     */
     @Select("select * from book where book_id = #{bookId}")
     @Results({
             @Result(column="book_id", property="bookId",id=true),
@@ -41,6 +52,9 @@ public interface BookMapper {
                     many = @Many(select = "com.example.bookbackend.mapper.CommentMapper.selectByBookId"))
     })
     Book selectWithComments(@Param("bookId") Integer bookId);
+
+    @SelectProvider(type = BookSqlProvider.class ,method = "selectBookList")
+    List<Book> selectBookList(@Param("book") Book book);
 
     @Update("update book set img_path=#{imgPath} where book_id=#{bookId}")
     Long updateImage(@Param("bookId") Integer bookId,@Param("imgPath") String imgPath);

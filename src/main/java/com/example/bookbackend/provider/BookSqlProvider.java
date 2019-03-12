@@ -16,4 +16,17 @@ public class BookSqlProvider {
             }
         }.toString();
     }
+
+    public String selectBookList(Book book){
+        return new SQL(){
+            {
+                SELECT("*");
+                FROM("book");
+                if (book.getBookId() != null)
+                    WHERE("book_id = #{book.bookId}");
+                if (book.getName() != null)
+                    WHERE("name = #{book.name}");
+            }
+        }.toString();
+    }
 }
