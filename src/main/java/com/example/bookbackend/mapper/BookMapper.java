@@ -7,6 +7,14 @@ import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
+/**
+ * book表中的state字段说明
+ * 1表示可交换
+ * 2表示发起交易等待对方确认
+ * 3代表对方发起交易等待自己确认
+ * 4代表交易完成
+ */
+
 @Mapper
 public interface BookMapper {
 
@@ -17,7 +25,7 @@ public interface BookMapper {
     //各种查询接口
     @Select("select * from book where book_id=#{bookId}")
     Book selectById(Integer bookId);//commentmapper关联查询用
-    @Select("select * from book where email=#{email} and state=1 order by book_id desc")
+    @Select("select * from book where email=#{email} order by book_id desc")
     List<Book> selectByEmail(@Param("email") String email);
     @Select("select * from book where find_in_set(#{type},type) and state=1 order by book_id desc")
     List<Book> selectByType(@Param("type") String type);

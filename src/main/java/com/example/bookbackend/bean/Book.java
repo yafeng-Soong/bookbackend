@@ -120,8 +120,10 @@ public class Book {
     public void addImgPaths(){
         imgPaths = new ArrayList<>() ;
         imgPaths.add(getImgPath());
-        imgPaths.add((imgPath2 == null? "/imgs/books/default.jpg":imgPath2));
-        imgPaths.add((imgPath3 == null? "/imgs/books/default.jpg":imgPath3));
+        if (imgPath2 != null)
+            imgPaths.add(imgPath2);
+        if (imgPath3 != null)
+            imgPaths.add(imgPath3);
     }
 
     public List<String> getImgPaths(){
